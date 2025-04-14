@@ -4,6 +4,8 @@ import 'package:store_app/Providers/studentProvider.dart';
 import 'package:store_app/Screens/ProfileScreen/ProfileService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
+import 'package:store_app/main.dart';
 
 class ProfilePicture extends ConsumerStatefulWidget {
   const ProfilePicture({super.key});
@@ -39,12 +41,30 @@ class _ProfilePictureState extends ConsumerState<ProfilePicture> {
       children: [
         UserImagePicker(
           onPickImage: (image) async {
+            final isConnected = await profileService.checkBackendConnection();
+            if (!isConnected) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("❌ Not connected to backend. try again later"),
+                ),
+              );
+              return;
+            }
             profileService.uploadImage(image);
           },
           fromProfile: true,
         ),
         TextButton(
-          onPressed: () {
+          onPressed: () async {
+            final isConnected = await profileService.checkBackendConnection();
+            if (!isConnected) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("❌ Not connected to backend. try again later"),
+                ),
+              );
+              return;
+            }
             profileService.deleteImage();
           },
           child: const Text(

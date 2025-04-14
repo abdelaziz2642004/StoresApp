@@ -23,6 +23,15 @@ class EditService extends Service {
 
   final Function rebuildParent;
 
+  Future<bool> checkBackendConnection() async {
+    try {
+      final response = await http.get(Uri.parse(baseUrl));
+      return response.statusCode == 200;
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<void> editStudent() async {
     final response = await http.post(
       Uri.parse("$baseUrl/editStudent"),

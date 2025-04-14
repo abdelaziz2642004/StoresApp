@@ -1,13 +1,33 @@
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:store_app/Screens/ProfileScreen/profileScreen.dart';
 import 'package:store_app/Screens/loginScreen/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
 
-  //loging Screen or SignUp Screen
-
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: LoginScreen());
+    return FutureBuilder(
+      future: Hive.openBox('student'),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        } else if (snapshot.hasError) {
+          return const Scaffold(
+            body: Center(child: Text('Error loading data')),
+          );
+        } else {
+          final box = snapshot.data as Box;
+          if (box.isEmpty) {
+            return const LoginScreen();
+          } else {
+            return const ProfileScreen();
+          }
+        }
+      },
+    );
   }
 }

@@ -22,30 +22,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   void initState() {
     super.initState();
     loginservice = Loginservice(ref: ref);
-    _attemptAutoLogin(); // Check Hive for saved credentials
-  }
-
-  Future<void> _attemptAutoLogin() async {
-    var box = await Hive.openBox('credentials');
-    int? storedId = box.get('studentID');
-    String? storedPassword = box.get('password');
-
-    if (storedId != null && storedPassword != null) {
-      ref.read(loginLoadingProvider.notifier).state =
-          true; // Show loading indicator
-      loginservice.studentID = storedId;
-      loginservice.password = storedPassword;
-      bool successful = await loginservice.getStudent(context);
-      ref.read(loginLoadingProvider.notifier).state =
-          false; // Hide loading indicator
-
-      if (successful && mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ProfileScreen()),
-        );
-      }
-    }
   }
 
   @override

@@ -66,7 +66,7 @@ class StudentIDField extends Field {
 
   @override
   void onChanged(String? value) {
-    if (value != null && value.isNotEmpty) service.studentID = int.parse(value);
+    if (value != null && value.isNotEmpty) service.ID = int.parse(value);
   }
 }
 

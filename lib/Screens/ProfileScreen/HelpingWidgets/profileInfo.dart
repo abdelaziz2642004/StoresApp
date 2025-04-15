@@ -1,4 +1,4 @@
-import 'package:store_app/Providers/studentProvider.dart';
+import 'package:store_app/Providers/customerProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

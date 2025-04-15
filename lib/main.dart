@@ -1,4 +1,4 @@
-import 'package:store_app/Models/student.dart';
+import 'package:store_app/Models/Customer.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/StoreDetailsScreen.dart';
 import 'package:store_app/app.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ const String baseUrl =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter(); // Initialize Hive
-  Hive.registerAdapter(StudentAdapter()); // Register here
+  Hive.registerAdapter(CustomerAdapter()); // Register here
   await Hive.openBox('student'); // Open the authBox before using it
 
   runApp(ProviderScope(child: MaterialApp(home: StoreDetailsScreen())));

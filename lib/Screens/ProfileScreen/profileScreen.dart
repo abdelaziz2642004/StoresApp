@@ -1,5 +1,5 @@
-import 'package:store_app/Models/student.dart';
-import 'package:store_app/Providers/studentProvider.dart';
+import 'package:store_app/Models/Customer.dart';
+import 'package:store_app/Providers/customerProvider.dart';
 import 'package:store_app/Screens/ProfileScreen/HelpingWidgets/profileInfo.dart';
 import 'package:store_app/Screens/ProfileScreen/HelpingWidgets/profileOptions.dart';
 import 'package:store_app/Screens/ProfileScreen/HelpingWidgets/profilePic.dart';
@@ -19,7 +19,7 @@ class ProfileScreen extends ConsumerStatefulWidget {
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    Student student = ref.watch(studentProvider);
+    Customer student = ref.watch(customerProviderr);
     return PopScope(
       canPop: false, // Prevents back navigation
       child: SafeArea(

@@ -1,6 +1,6 @@
 import 'package:store_app/FieldsData/SuccessMessage.dart';
-import 'package:store_app/Models/student.dart';
-import 'package:store_app/Providers/studentProvider.dart';
+import 'package:store_app/Models/Customer.dart';
+import 'package:store_app/Providers/customerProvider.dart';
 import 'package:store_app/Screens/EditInfoScreen/EditinfoScreen.dart';
 import 'package:store_app/Screens/EditInfoScreen/editService.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +12,11 @@ class ProfileOptions extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final EditService editService = EditService(rebuildParent: () {}, ref: ref);
-    Student student = ref.watch(studentProvider);
+    Customer student = ref.watch(customerProviderr);
     editService.gender = student.gender;
     editService.fullName = student.fullName;
     editService.level = student.level;
-    editService.studentID = student.studentID;
+    editService.ID = student.studentID;
     editService.email = student.email;
 
     return Column(
@@ -111,7 +111,7 @@ class ProfileOptions extends ConsumerWidget {
   void _showChangePasswordDialog(
     BuildContext context,
     EditService editService,
-    Student student,
+    Customer student,
   ) {
     final TextEditingController oldPasswordController = TextEditingController();
     final TextEditingController newPasswordController = TextEditingController();

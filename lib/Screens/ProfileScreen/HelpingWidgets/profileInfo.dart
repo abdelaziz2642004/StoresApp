@@ -24,7 +24,7 @@ class _ProfileInfoState extends ConsumerState<ProfileInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final student = ref.watch(studentProvider);
+    final student = ref.watch(customerProviderr);
 
     return Center(
       child: Card(

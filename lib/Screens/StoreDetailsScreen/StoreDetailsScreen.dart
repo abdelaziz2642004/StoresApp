@@ -13,7 +13,7 @@ class StoreDetailsScreen extends ConsumerStatefulWidget {
 class _StoreDetailsScreenState extends ConsumerState<StoreDetailsScreen> {
   final DistanceService distanceService = DistanceService();
 
-  
+
   @override
   Widget build(BuildContext context) {
     final store = Store(

@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 import 'package:store_app/FieldsData/Service.dart';
 import 'package:store_app/FieldsData/SuccessMessage.dart';
-import 'package:store_app/Models/student.dart';
-import 'package:store_app/Providers/studentProvider.dart';
+import 'package:store_app/Models/Customer.dart';
+import 'package:store_app/Providers/customerProvider.dart';
 import 'package:store_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,9 +18,9 @@ class Loginservice extends Service {
 
   Future<bool> getStudent(BuildContext context) async {
     final response = await http.post(
-      Uri.parse("$baseUrl/getStudent"),
+      Uri.parse("$baseUrl/getCustomer"),
       headers: {"Content-Type": "application/json"},
-      body: jsonEncode({'id': studentID, 'password': password.trim()}),
+      body: jsonEncode({'id': ID, 'password': password.trim()}),
     );
 
     if (response.statusCode == 200 && response.body.isNotEmpty) {
@@ -31,7 +31,7 @@ class Loginservice extends Service {
             : json['imageData']['imageData'] as String,
       );
 
-      Student student = Student(
+      Customer student = Customer(
         fullName: json['name'] as String,
         email: json['email'] as String,
         studentID: json['id'] as int,
@@ -40,7 +40,7 @@ class Loginservice extends Service {
         imageBytes: imageBytes,
       );
 
-      ref.read(studentProvider.notifier).updateStudent(student);
+      ref.read(customerProviderr.notifier).updateStudent(student);
 
       // // Clear Hive storage and store new credentials
       // var box = Hive.box('credentials');

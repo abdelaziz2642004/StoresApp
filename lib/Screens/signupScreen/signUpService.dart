@@ -15,7 +15,7 @@ class SignUpService extends Service {
       Uri.parse("$baseUrl/addStudent"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
-        "id": studentID,
+        "id": ID,
         "name": fullName,
         "gender": gender,
         "email": email,
@@ -39,7 +39,7 @@ class SignUpService extends Service {
     final response = await http.post(
       Uri.parse("$baseUrl/IDexists"),
       headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"id": studentID}),
+      body: jsonEncode({"id": ID}),
     );
 
     if (response.statusCode == 200) {

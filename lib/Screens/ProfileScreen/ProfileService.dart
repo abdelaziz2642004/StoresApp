@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:store_app/FieldsData/Service.dart';
-import 'package:store_app/Providers/studentProvider.dart';
+import 'package:store_app/Providers/customerProvider.dart';
 import 'package:store_app/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +14,7 @@ class ProfileService extends Service {
 
   final WidgetRef ref;
 
- static Future<bool> checkBackendConnection() async {
+  static Future<bool> checkBackendConnection() async {
     try {
       final response = await http.get(Uri.parse(baseUrl));
       return response.statusCode == 200;
@@ -27,7 +27,7 @@ class ProfileService extends Service {
     try {
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse("$baseUrl/$studentID/addImage"),
+        Uri.parse("$baseUrl/$ID/addImage"),
       );
 
       String? mimeType = lookupMimeType(image.path);
@@ -52,7 +52,7 @@ class ProfileService extends Service {
         Uint8List bytes = await image.readAsBytes();
 
         // ✅ Update studentProvider with the new image
-        ref.read(studentProvider.notifier).updateImage(bytes);
+        ref.read(customerProviderr.notifier).updateImage(bytes);
       } else {
         print("Failed to upload: ${response.statusCode}");
       }
@@ -63,11 +63,11 @@ class ProfileService extends Service {
 
   Future<void> deleteImage() async {
     final response = await http.get(
-      Uri.parse("$baseUrl/$studentID/delImage"),
+      Uri.parse("$baseUrl/$ID/delImage"),
       headers: {"Content-Type": "application/json"},
     );
     if (response.statusCode == 200) {
-      ref.read(studentProvider.notifier).updateImage(Uint8List(0));
+      ref.read(customerProviderr.notifier).updateImage(Uint8List(0));
     }
   }
 }

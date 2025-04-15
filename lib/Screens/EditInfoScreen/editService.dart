@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:store_app/FieldsData/Service.dart';
 import 'package:store_app/FieldsData/SuccessMessage.dart';
-// import 'package:store_app/Providers/studentProvider.dart';
+import 'package:store_app/Providers/customerProvider.dart';
+// import 'package:store_app/Providers/customerProviderr.dart';
 
-import '/Providers/studentProvider.dart';
 import 'package:store_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,10 +34,10 @@ class EditService extends Service {
 
   Future<void> editStudent() async {
     final response = await http.post(
-      Uri.parse("$baseUrl/editStudent"),
+      Uri.parse("$baseUrl/editCustomer"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
-        "id": studentID,
+        "id": ID,
         "name": fullName,
         "gender": gender,
         "level": level ?? 0,
@@ -45,10 +45,10 @@ class EditService extends Service {
     );
 
     if (response.statusCode == 200) {
-      print("Student edited successfully!");
-      ref.read(studentProvider.notifier).updateGender(gender);
-      ref.read(studentProvider.notifier).updateFullName(fullName);
-      ref.read(studentProvider.notifier).updateLevel(level);
+      // print("Student edited successfully!");
+      ref.read(customerProviderr.notifier).updateGender(gender);
+      ref.read(customerProviderr.notifier).updateFullName(fullName);
+      ref.read(customerProviderr.notifier).updateLevel(level);
 
       // pop up sucesful
     } else {
@@ -58,16 +58,16 @@ class EditService extends Service {
 
   Future<bool> changePassword(BuildContext context) async {
     String newPassword = confirmPassword; // just for you to understand :D
-    if (password == ref.read(studentProvider).password) {
+    if (password == ref.read(customerProviderr).password) {
       final response = await http.post(
         Uri.parse("$baseUrl/changePassword"),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"id": studentID, "password": newPassword}),
+        body: jsonEncode({"id": ID, "password": newPassword}),
       );
 
       if (response.statusCode == 200) {
-        print("Student edited successfully!");
-        ref.read(studentProvider.notifier).updatePassword(newPassword);
+        // print("Student edited successfully!");
+        ref.read(customerProviderr.notifier).updatePassword(newPassword);
         // showSuccessPopup(context, "🎉 Success!");
         return true;
         // pop up sucesful
@@ -82,9 +82,9 @@ class EditService extends Service {
 
   Future<void> deleteAccount(BuildContext context) async {
     final response = await http.post(
-      Uri.parse("$baseUrl/deleteStudent"),
+      Uri.parse("$baseUrl/deleteCustomer"),
       headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"id": studentID}),
+      body: jsonEncode({"id": ID}),
     );
 
     if (response.statusCode == 200) {

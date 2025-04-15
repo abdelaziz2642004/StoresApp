@@ -1,5 +1,5 @@
-import 'package:store_app/Models/student.dart';
-import 'package:store_app/Providers/studentProvider.dart';
+import 'package:store_app/Models/Customer.dart';
+import 'package:store_app/Providers/customerProvider.dart';
 import 'package:store_app/Screens/EditInfoScreen/HelpingWidgets.dart/Edit_fields_section.dart';
 import 'package:store_app/Screens/EditInfoScreen/HelpingWidgets.dart/save_button_section.dart';
 import 'package:store_app/Screens/EditInfoScreen/editService.dart';
@@ -24,10 +24,10 @@ class _SignupScreenState extends ConsumerState<Editinfoscreen> {
       },
       ref: ref,
     );
-    Student student = ref.read(studentProvider);
+    Customer student = ref.read(customerProviderr);
 
     editservice.fullName = student.fullName;
-    editservice.studentID = student.studentID;
+    editservice.ID = student.studentID;
     editservice.email = student.email;
   }
 

@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:store_app/Screens/ProfileScreen/profileScreen.dart';
+import 'package:store_app/Screens/StoresScreen/StoresScreen.dart';
 import 'package:store_app/Screens/loginScreen/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +24,7 @@ class App extends StatelessWidget {
           if (box.isEmpty) {
             return const LoginScreen();
           } else {
-            return const ProfileScreen();
+            return const StoreScreen();
           }
         }
       },

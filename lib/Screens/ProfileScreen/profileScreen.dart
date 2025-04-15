@@ -19,9 +19,8 @@ class ProfileScreen extends ConsumerStatefulWidget {
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    Customer student = ref.watch(customerProviderr);
+    Customer cust = ref.watch(customerProviderr);
     return PopScope(
-      canPop: false, // Prevents back navigation
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,

@@ -90,7 +90,7 @@ class _UserImagePickerState extends ConsumerState<UserImagePicker> {
                         ? const AssetImage("assets/images/image.png")
                         : MemoryImage(
                           cust.imageBytes!,
-                        ), // Use MemoryImage instead of Image.memory
+                        ),
               ),
 
               // if (user!.fullName != 'Guest')

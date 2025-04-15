@@ -12,7 +12,7 @@ class SignUpService extends Service {
   // this code is completely unrelted to your local machine , this is another device !!
   Future<void> addStudent(BuildContext context) async {
     final response = await http.post(
-      Uri.parse("$baseUrl/addStudent"),
+      Uri.parse("$baseUrl/addCustomer"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "id": ID,

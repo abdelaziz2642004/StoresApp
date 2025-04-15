@@ -47,6 +47,7 @@ dependencies:
   scope_provider: ^0.1.8
   sqflite: ^2.4.1
   flutter_map_math: ^0.2.1
+  geocoding: ^3.0.0
   
 
 dev_dependencies:

@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:hive/hive.dart';
 
 class Loginservice extends Service {
   final _formKey = GlobalKey<FormState>();
@@ -16,7 +15,7 @@ class Loginservice extends Service {
   Loginservice({required this.ref});
   final WidgetRef ref;
 
-  Future<bool> getStudent(BuildContext context) async {
+  Future<bool> getCustomer(BuildContext context) async {
     final response = await http.post(
       Uri.parse("$baseUrl/getCustomer"),
       headers: {"Content-Type": "application/json"},

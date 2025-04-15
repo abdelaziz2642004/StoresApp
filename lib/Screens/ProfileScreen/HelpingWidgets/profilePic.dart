@@ -41,7 +41,7 @@ class _ProfilePictureState extends ConsumerState<ProfilePicture> {
       children: [
         UserImagePicker(
           onPickImage: (image) async {
-            final isConnected = await profileService.checkBackendConnection();
+            final isConnected = await ProfileService.checkBackendConnection();
             if (!isConnected) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -56,8 +56,10 @@ class _ProfilePictureState extends ConsumerState<ProfilePicture> {
         ),
         TextButton(
           onPressed: () async {
-            final isConnected = await profileService.checkBackendConnection();
+            final isConnected = await ProfileService.checkBackendConnection();
             if (!isConnected) {
+              ScaffoldMessenger.of(context).clearSnackBars();
+
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text("❌ Not connected to backend. try again later"),

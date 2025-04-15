@@ -32,10 +32,25 @@ class ProfileOptions extends ConsumerWidget {
           subtitle: const Text('Edit your info'),
           leading: const Icon(Icons.edit, color: Color(0xffc47c51)),
           onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Editinfoscreen()),
-              ),
+              ()async {
+                final isConnected = await editService.checkBackendConnection();
+                print(isConnected);
+                if (!isConnected) {
+                  ScaffoldMessenger.of(context).clearSnackBars();
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("❌ Not connected to backend. try again later"),
+                    ),
+                  );
+                  return;
+                }
+            Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Editinfoscreen()),
+          );
+
+          }
         ),
         ListTile(
           title: const Text(
@@ -50,7 +65,21 @@ class ProfileOptions extends ConsumerWidget {
             Icons.change_circle_rounded,
             color: Color(0xffc47c51),
           ),
-          onTap: () => _showChangePasswordDialog(context, editService, student),
+          onTap: ()async {
+            final isConnected = await editService.checkBackendConnection();
+            print(isConnected);
+            if (!isConnected) {
+              ScaffoldMessenger.of(context).clearSnackBars();
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("❌ Not connected to backend. try again later"),
+                ),
+              );
+              return;
+            }
+            _showChangePasswordDialog(context, editService, student);
+          }
         ),
         ListTile(
           title: const Text(
@@ -63,7 +92,21 @@ class ProfileOptions extends ConsumerWidget {
           ),
           subtitle: const Text('Permanently delete your account'),
           leading: const Icon(Icons.delete, color: Colors.red),
-          onTap: () => _showDeleteConfirmationDialog(context, editService),
+          onTap: () async{
+            final isConnected = await editService.checkBackendConnection();
+            // print(isConnected);
+            if (!isConnected) {
+              ScaffoldMessenger.of(context).clearSnackBars();
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("❌ Not connected to backend. try again later"),
+                ),
+              );
+              return;
+            }
+            _showDeleteConfirmationDialog(context, editService);
+          }
         ),
       ],
     );

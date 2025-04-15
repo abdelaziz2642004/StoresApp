@@ -3,6 +3,7 @@ import 'package:store_app/Providers/studentProvider.dart';
 import 'package:store_app/Screens/ProfileScreen/HelpingWidgets/profileInfo.dart';
 import 'package:store_app/Screens/ProfileScreen/HelpingWidgets/profileOptions.dart';
 import 'package:store_app/Screens/ProfileScreen/HelpingWidgets/profilePic.dart';
+import 'package:store_app/Screens/ProfileScreen/ProfileService.dart';
 import 'package:store_app/Screens/loginScreen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,6 +56,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
+                        final isConnected = await ProfileService.checkBackendConnection();
+                        print(isConnected);
+                        if (!isConnected) {
+                          ScaffoldMessenger.of(context).clearSnackBars();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("❌ Not connected to backend. try again later"),
+                            ),
+                          );
+                          return;
+                        }
+
                         var box = Hive.box('credentials');
                         await box.clear();
 

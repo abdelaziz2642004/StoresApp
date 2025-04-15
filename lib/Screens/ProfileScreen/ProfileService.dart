@@ -14,7 +14,7 @@ class ProfileService extends Service {
 
   final WidgetRef ref;
 
-  Future<bool> checkBackendConnection() async {
+ static Future<bool> checkBackendConnection() async {
     try {
       final response = await http.get(Uri.parse(baseUrl));
       return response.statusCode == 200;

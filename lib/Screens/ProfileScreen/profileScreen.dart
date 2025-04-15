@@ -56,31 +56,22 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () async {
-                        final isConnected = await ProfileService.checkBackendConnection();
-                        print(isConnected);
+                        final isConnected =
+                            await ProfileService.checkBackendConnection();
                         if (!isConnected) {
                           ScaffoldMessenger.of(context).clearSnackBars();
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text("❌ Not connected to backend. try again later"),
+                              content: Text(
+                                "❌ Not connected to backend. try again later",
+                              ),
                             ),
                           );
                           return;
                         }
 
-                        var box = Hive.box('credentials');
+                        var box = Hive.box('student');
                         await box.clear();
-
-                        ref
-                            .read(studentProvider.notifier)
-                            .updateStudent(
-                              Student(
-                                fullName: 'fullName',
-                                email: 'email',
-                                studentID: 0,
-                                password: 'password',
-                              ),
-                            );
 
                         Navigator.pushReplacement(
                           context,

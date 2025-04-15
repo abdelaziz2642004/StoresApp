@@ -42,11 +42,11 @@ class Loginservice extends Service {
 
       ref.read(studentProvider.notifier).updateStudent(student);
 
-      // Clear Hive storage and store new credentials
-      var box = Hive.box('credentials');
-      await box.clear();
-      await box.put('studentID', student.studentID);
-      await box.put('password', student.password);
+      // // Clear Hive storage and store new credentials
+      // var box = Hive.box('credentials');
+      // await box.clear();
+      // await box.put('studentID', student.studentID);
+      // await box.put('password', student.password);
 
       return true;
     } else {

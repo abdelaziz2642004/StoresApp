@@ -123,8 +123,11 @@ class Studentprovider extends StateNotifier<Student> {
   }
 
   // Method to update multiple fields using a map
-  void updateStudent(Student student) {
+  void updateStudent(Student student) async {
     state = student;
+    final box = await Hive.openBox('student');
+    await box.put('student', state);
+    print(box.get('student'));
   }
 }
 

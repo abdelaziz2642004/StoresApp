@@ -20,7 +20,7 @@ class CustomerAdapter extends TypeAdapter<Customer> {
       fullName: fields[0] as String,
       gender: fields[1] as String?,
       email: fields[2] as String,
-      studentID: fields[3] as int,
+      ID: fields[3] as int,
       level: fields[4] as int?,
       password: fields[5] as String,
       imageBytes: fields[6] as Uint8List?,
@@ -38,7 +38,7 @@ class CustomerAdapter extends TypeAdapter<Customer> {
       ..writeByte(2)
       ..write(obj.email)
       ..writeByte(3)
-      ..write(obj.studentID)
+      ..write(obj.ID)
       ..writeByte(4)
       ..write(obj.level)
       ..writeByte(5)

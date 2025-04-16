@@ -16,7 +16,7 @@ class ProfileOptions extends ConsumerWidget {
     editService.gender = student.gender;
     editService.fullName = student.fullName;
     editService.level = student.level;
-    editService.ID = student.studentID;
+    editService.ID = student.ID;
     editService.email = student.email;
 
     return Column(

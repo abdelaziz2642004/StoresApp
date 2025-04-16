@@ -27,7 +27,7 @@ class _SignupScreenState extends ConsumerState<Editinfoscreen> {
     Customer student = ref.read(customerProviderr);
 
     editservice.fullName = student.fullName;
-    editservice.ID = student.studentID;
+    editservice.ID = student.ID;
     editservice.email = student.email;
   }
 

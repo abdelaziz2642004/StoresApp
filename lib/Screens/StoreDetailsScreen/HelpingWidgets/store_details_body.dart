@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:store_app/Models/store.dart';
+import 'package:store_app/Providers/favoriteMealsProvider.dart';
+import 'package:store_app/Screens/FavoriteScreen/favoriteService.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/HelpingWidgets/store_colors.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/HelpingWidgets/store_distance_card.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/HelpingWidgets/store_info_chip.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/distanceService.dart';
 
-class StoreDetailsBody extends StatelessWidget {
+class StoreDetailsBody extends ConsumerStatefulWidget {
   final Store store;
   final String? address;
   final bool loadingAddress;
@@ -20,8 +23,17 @@ class StoreDetailsBody extends StatelessWidget {
   });
 
   @override
+  ConsumerState<StoreDetailsBody> createState() => _StoreDetailsBodyState();
+}
+
+class _StoreDetailsBodyState extends ConsumerState<StoreDetailsBody> {
+  @override
   Widget build(BuildContext context) {
-    final Future<double> distance = distanceService.getDistanceToStore(store);
+    final favoritedStoresAsync = ref.watch(favoriteStoresProvider);
+    final FavoriteService favoriteService = FavoriteService(ref: ref);
+    final Future<double> distance = widget.distanceService.getDistanceToStore(
+      widget.store,
+    );
 
     return FutureBuilder<double>(
       future: distance,
@@ -40,7 +52,7 @@ class StoreDetailsBody extends StatelessWidget {
             extendBodyBehindAppBar: true,
             appBar: AppBar(
               title: Text(
-                store.name,
+                widget.store.name,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -62,15 +74,19 @@ class StoreDetailsBody extends StatelessWidget {
                   Stack(
                     children: [
                       Hero(
-                        tag: store.name,
+                        tag: widget.store.name,
                         child: Container(
                           height: 320,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: store.imageBytes != null
-                                  ? MemoryImage(store.imageBytes!)
-                                  : const AssetImage('assets/images/image.png') as ImageProvider,
+                              image:
+                                  widget.store.imageBytes != null
+                                      ? MemoryImage(widget.store.imageBytes!)
+                                      : const AssetImage(
+                                            'assets/images/image.png',
+                                          )
+                                          as ImageProvider,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -103,7 +119,7 @@ class StoreDetailsBody extends StatelessWidget {
                             StoreInfoChip(text: distanceText),
                             const SizedBox(height: 10),
                             StoreInfoChip(
-                              text: '${store.rating} ★',
+                              text: '${widget.store.rating} ★',
                               icon: Icons.star,
                               iconColor: const Color(0xffffb347),
                             ),
@@ -117,39 +133,107 @@ class StoreDetailsBody extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(children: [
-                          Text(store.name, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor)),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.star_border, size: 32), // increase size here
-                            // Optional: change color if needed
-                            // color: Colors.amber,
-                          ),
-                        ],),
+                        Row(
+                          children: [
+                            Text(
+                              widget.store.name,
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: textColor,
+                              ),
+                            ),
+                            const Spacer(),
+                            favoritedStoresAsync.when(
+                              data: (favoritedStores) {
+                                return IconButton(
+                                  onPressed: () async {
+                                    await favoriteService.toggleFavorite(
+                                      widget.store,
+                                    );
+                                    setState(() {});
+                                  },
+                                  icon: Icon(
+                                    favoritedStores.contains(widget.store)
+                                        ? Icons.star
+                                        : Icons.star_border,
+                                    size: 32,
+                                  ),
+                                );
+                              },
+                              loading: () => const CircularProgressIndicator(),
+                              error:
+                                  (error, stack) => IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.star_border,
+                                      size: 32,
+                                    ),
+                                  ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 16),
-                        Text('About', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor)),
+                        Text(
+                          'About',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: textColor,
+                          ),
+                        ),
                         const SizedBox(height: 8),
-                        Text(store.description, style: TextStyle(fontSize: 16, color: secondaryText, height: 1.4)),
+                        Text(
+                          widget.store.description,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: secondaryText,
+                            height: 1.4,
+                          ),
+                        ),
                         const SizedBox(height: 24),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(Icons.location_pin, color: primaryColor, size: 28),
+                            Icon(
+                              Icons.location_pin,
+                              color: primaryColor,
+                              size: 28,
+                            ),
                             const SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Location', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor)),
+                                  Text(
+                                    'Location',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: textColor,
+                                    ),
+                                  ),
                                   const SizedBox(height: 8),
-                                  loadingAddress
-                                      ? const CircularProgressIndicator(strokeWidth: 2, color: Color(0xffc47c51))
-                                      : Text(address ?? 'Address not available', style: TextStyle(fontSize: 16, color: secondaryText)),
+                                  widget.loadingAddress
+                                      ? const CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Color(0xffc47c51),
+                                      )
+                                      : Text(
+                                        widget.address ??
+                                            'Address not available',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: secondaryText,
+                                        ),
+                                      ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    'Coordinates: ${store.latitude.toStringAsFixed(4)}, ${store.longitude.toStringAsFixed(4)}',
-                                    style: TextStyle(fontSize: 12, color: secondaryText.withOpacity(0.7)),
+                                    'Coordinates: ${widget.store.latitude.toStringAsFixed(4)}, ${widget.store.longitude.toStringAsFixed(4)}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: secondaryText.withOpacity(0.7),
+                                    ),
                                   ),
                                 ],
                               ),

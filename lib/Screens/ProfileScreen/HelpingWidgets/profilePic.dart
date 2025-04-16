@@ -28,7 +28,7 @@ class _ProfilePictureState extends ConsumerState<ProfilePicture> {
     profileService.gender = cust.gender;
     profileService.fullName = cust.fullName;
     profileService.level = cust.level;
-    profileService.ID = cust.studentID;
+    profileService.ID = cust.ID;
     profileService.email = cust.email;
   }
 

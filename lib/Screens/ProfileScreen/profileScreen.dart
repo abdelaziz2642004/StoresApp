@@ -21,6 +21,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     Customer cust = ref.watch(customerProviderr);
     return PopScope(
+      canPop: true,
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
@@ -36,7 +37,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             centerTitle: true,
             backgroundColor: Colors.white,
             elevation: 0,
-            automaticallyImplyLeading: false, // Hides back button
           ),
           body: SingleChildScrollView(
             child: Padding(

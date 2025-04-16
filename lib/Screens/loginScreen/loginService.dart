@@ -33,7 +33,7 @@ class Loginservice extends Service {
       Customer student = Customer(
         fullName: json['name'] as String,
         email: json['email'] as String,
-        studentID: json['id'] as int,
+        ID: json['id'] as int,
         password: json['password'] as String,
         gender: json['gender'],
         imageBytes: imageBytes,

@@ -15,7 +15,7 @@ class Customer extends HiveObject {
   final String email;
 
   @HiveField(3)
-  final int studentID;
+  final int ID;
 
   @HiveField(4)
   final int? level;
@@ -30,7 +30,7 @@ class Customer extends HiveObject {
     required this.fullName,
     this.gender,
     required this.email,
-    required this.studentID,
+    required this.ID,
     this.level,
     required this.password,
     this.imageBytes,

@@ -15,7 +15,7 @@ class customerProvider extends StateNotifier<Customer> {
       return Customer(
         fullName: 'fullName',
         email: 'email',
-        studentID: 0,
+        ID: 0,
         password: 'password',
       );
     } else {
@@ -26,7 +26,7 @@ class customerProvider extends StateNotifier<Customer> {
         return Customer(
           fullName: 'fullName',
           email: 'email',
-          studentID: 0,
+          ID: 0,
           password: 'password',
         );
       }
@@ -38,7 +38,7 @@ class customerProvider extends StateNotifier<Customer> {
     state = Customer(
       fullName: 'fullName',
       email: 'email',
-      studentID: 0,
+      ID: 0,
       password: 'password',
     );
     final box = await Hive.openBox('student');
@@ -51,7 +51,7 @@ class customerProvider extends StateNotifier<Customer> {
       fullName: newFullName,
       gender: state.gender,
       email: state.email,
-      studentID: state.studentID,
+      ID: state.ID,
       level: state.level,
       password: state.password,
       imageBytes: state.imageBytes,
@@ -66,7 +66,7 @@ class customerProvider extends StateNotifier<Customer> {
       fullName: state.fullName,
       gender: newGender,
       email: state.email,
-      studentID: state.studentID,
+      ID: state.ID,
       level: state.level,
       password: state.password,
       imageBytes: state.imageBytes,
@@ -83,7 +83,7 @@ class customerProvider extends StateNotifier<Customer> {
       fullName: state.fullName,
       gender: state.gender,
       email: state.email,
-      studentID: state.studentID,
+      ID: state.ID,
       level: newLevel,
       password: state.password,
       imageBytes: state.imageBytes,
@@ -98,7 +98,7 @@ class customerProvider extends StateNotifier<Customer> {
       fullName: state.fullName,
       gender: state.gender,
       email: state.email,
-      studentID: state.studentID,
+      ID: state.ID,
       level: state.level,
       password: newPassword,
       imageBytes: state.imageBytes,
@@ -113,7 +113,7 @@ class customerProvider extends StateNotifier<Customer> {
       fullName: state.fullName,
       gender: state.gender,
       email: state.email,
-      studentID: state.studentID,
+      ID: state.ID,
       level: state.level,
       password: state.password,
       imageBytes: newImageBytes,

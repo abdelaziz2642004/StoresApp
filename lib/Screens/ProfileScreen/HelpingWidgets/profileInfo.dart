@@ -47,7 +47,7 @@ class _ProfileInfoState extends ConsumerState<ProfileInfo> {
               const SizedBox(height: 8),
               Divider(color: Colors.grey.shade300, thickness: 1),
               const SizedBox(height: 8),
-              _buildInfoRow(Icons.badge, 'ID', student.studentID.toString()),
+              _buildInfoRow(Icons.badge, 'ID', student.ID.toString()),
               _buildInfoRow(Icons.email, 'Email', student.email),
               _buildInfoRow(
                 Icons.school,

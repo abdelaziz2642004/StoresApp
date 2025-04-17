@@ -1,4 +1,5 @@
 import 'package:store_app/Screens/ProfileScreen/profileScreen.dart';
+import 'package:store_app/Screens/StoresScreen/StoresScreen.dart';
 import 'package:store_app/Screens/loginScreen/loginService.dart';
 import 'package:store_app/Screens/signupScreen/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +17,12 @@ class LoginButtonSection extends StatelessWidget {
         children: [
           TextButton(
             onPressed: () async {
-              bool successful = await loginservice.getStudent(context);
+              bool successful = await loginservice.getCustomer(context);
               if (successful) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ProfileScreen(),
+                    builder: (context) =>  StoreScreen(),
                   ),
                 );
               }

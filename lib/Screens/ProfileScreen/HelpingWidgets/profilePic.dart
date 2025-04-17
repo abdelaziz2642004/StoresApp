@@ -1,6 +1,6 @@
 import 'package:store_app/ImagePIcker.dart';
-import 'package:store_app/Models/student.dart';
-import 'package:store_app/Providers/studentProvider.dart';
+import 'package:store_app/Models/Customer.dart';
+import 'package:store_app/Providers/customerProvider.dart';
 import 'package:store_app/Screens/ProfileScreen/ProfileService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,19 +24,19 @@ class _ProfilePictureState extends ConsumerState<ProfilePicture> {
     // TODO: implement initState
     super.initState();
     profileService = ProfileService(ref: ref);
-    Student student = ref.read(studentProvider);
-    profileService.gender = student.gender;
-    profileService.fullName = student.fullName;
-    profileService.level = student.level;
-    profileService.studentID = student.studentID;
-    profileService.email = student.email;
+    Customer cust = ref.read(customerProviderr);
+    profileService.gender = cust.gender;
+    profileService.fullName = cust.fullName;
+    profileService.level = cust.level;
+    profileService.ID = cust.ID;
+    profileService.email = cust.email;
   }
 
   late final ProfileService profileService;
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(studentProvider);
+    ref.watch(customerProviderr);
     return Column(
       children: [
         UserImagePicker(

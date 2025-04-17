@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 class Store {
+  final int id;
   final String name;
   final String description;
   final double rating;
@@ -9,6 +10,7 @@ class Store {
   final Uint8List? imageBytes;
 
   Store({
+    required this.id,
     required this.name,
     required this.description,
     required this.rating,

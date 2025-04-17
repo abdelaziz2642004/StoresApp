@@ -1,4 +1,4 @@
-import 'package:store_app/Providers/studentProvider.dart';
+import 'package:store_app/Providers/customerProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,7 +24,7 @@ class _ProfileInfoState extends ConsumerState<ProfileInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final student = ref.watch(studentProvider);
+    final student = ref.watch(customerProviderr);
 
     return Center(
       child: Card(
@@ -47,7 +47,7 @@ class _ProfileInfoState extends ConsumerState<ProfileInfo> {
               const SizedBox(height: 8),
               Divider(color: Colors.grey.shade300, thickness: 1),
               const SizedBox(height: 8),
-              _buildInfoRow(Icons.badge, 'ID', student.studentID.toString()),
+              _buildInfoRow(Icons.badge, 'ID', student.ID.toString()),
               _buildInfoRow(Icons.email, 'Email', student.email),
               _buildInfoRow(
                 Icons.school,

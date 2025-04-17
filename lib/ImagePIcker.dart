@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:store_app/Models/student.dart';
-import 'package:store_app/Providers/studentProvider.dart';
+import 'package:store_app/Models/Customer.dart';
+import 'package:store_app/Providers/customerProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -74,7 +74,7 @@ class _UserImagePickerState extends ConsumerState<UserImagePicker> {
   Widget build(BuildContext context) {
     // final user = ref.watch(userProvider).value;
     // final imageUrl = user?.ImageUrl;
-    Student student = ref.watch(studentProvider);
+    Customer cust = ref.watch(customerProviderr);
 
     return GestureDetector(
       onTap: _pickImage,
@@ -86,11 +86,11 @@ class _UserImagePickerState extends ConsumerState<UserImagePicker> {
                 radius: widget.fromProfile ? 50 : 40,
                 backgroundColor: const Color(0xffc47c51),
                 backgroundImage:
-                    (student.imageBytes == null || student.imageBytes!.isEmpty)
+                    (cust.imageBytes == null || cust.imageBytes!.isEmpty)
                         ? const AssetImage("assets/images/image.png")
                         : MemoryImage(
-                          student.imageBytes!,
-                        ), // Use MemoryImage instead of Image.memory
+                          cust.imageBytes!,
+                        ),
               ),
 
               // if (user!.fullName != 'Guest')

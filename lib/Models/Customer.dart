@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 import 'package:hive/hive.dart';
 
-part 'student.g.dart'; // Required for code generation
+part 'Customer.g.dart'; // Required for code generation
 
 @HiveType(typeId: 0)
-class Student extends HiveObject {
+class Customer extends HiveObject {
   @HiveField(0)
   final String fullName;
 
@@ -15,7 +15,7 @@ class Student extends HiveObject {
   final String email;
 
   @HiveField(3)
-  final int studentID;
+  final int ID;
 
   @HiveField(4)
   final int? level;
@@ -26,11 +26,11 @@ class Student extends HiveObject {
   @HiveField(6)
   final Uint8List? imageBytes;
 
-  Student({
+  Customer({
     required this.fullName,
     this.gender,
     required this.email,
-    required this.studentID,
+    required this.ID,
     this.level,
     required this.password,
     this.imageBytes,

@@ -1,9 +1,8 @@
-
 abstract class Service {
   String _fullName = '';
   String? _gender;
   String _email = '';
-  int _studentID = 0;
+  int _ID = 0;
   int? level;
   String _password = '';
   String _confirmPassword = '';
@@ -19,9 +18,9 @@ abstract class Service {
 
   set email(value) => _email = value;
 
-  get studentID => _studentID;
+  get ID => _ID;
 
-  set studentID(value) => _studentID = value;
+  set ID(value) => _ID = value;
 
   get getLevel => level;
 

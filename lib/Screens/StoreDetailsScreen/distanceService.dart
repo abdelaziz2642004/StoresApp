@@ -1,15 +1,14 @@
 import 'package:flutter_map_math/flutter_geo_math.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:store_app/Models/store.dart';
 
 class DistanceService {
   Future<Position> getUserLocation() async {
-    print("im here");
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       throw Exception('Location services are disabled.');
     }
-    print("here");
 
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
@@ -18,13 +17,10 @@ class DistanceService {
         throw Exception('Location permission denied.');
       }
     }
-    print("heree");
 
     if (permission == LocationPermission.deniedForever) {
       throw Exception('Location permission permanently denied.');
     }
-
-    print("im here");
 
     return await Geolocator.getCurrentPosition();
   }
@@ -34,7 +30,6 @@ class DistanceService {
     String unit = "meters",
   }) async {
     final user = await getUserLocation();
-    print("im here");
     return FlutterMapMath().distanceBetween(
       user.latitude,
       user.longitude,
@@ -42,5 +37,26 @@ class DistanceService {
       store.longitude,
       unit,
     );
+  }
+
+
+  Future<String?> getAddressFromCoordinates(Store store) async {
+    try {
+      final placemarks = await placemarkFromCoordinates(
+        store.latitude,
+        store.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        final place = placemarks.first;
+        return [
+          if (place.street != null && place.street!.isNotEmpty) place.street,
+          if (place.locality != null && place.locality!.isNotEmpty) place.locality,
+          if (place.postalCode != null && place.postalCode!.isNotEmpty) place.postalCode,
+          if (place.country != null && place.country!.isNotEmpty) place.country,
+        ].join(', ');
+      }
+    } catch (_) {}
+    return null;
   }
 }

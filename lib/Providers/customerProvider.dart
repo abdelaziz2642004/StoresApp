@@ -1,32 +1,32 @@
 import 'dart:typed_data';
 
 import 'package:hive/hive.dart';
-import 'package:store_app/Models/student.dart';
+import 'package:store_app/Models/Customer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Studentprovider extends StateNotifier<Student> {
+class customerProvider extends StateNotifier<Customer> {
   // Constructor
-  Studentprovider() : super(_getInitialStudent());
+  customerProvider() : super(_getInitialStudent());
 
   // Get initial student from Hive or return default
-  static Student _getInitialStudent() {
+  static Customer _getInitialStudent() {
     var box = Hive.box('student');
     if (box.isEmpty) {
-      return Student(
+      return Customer(
         fullName: 'fullName',
         email: 'email',
-        studentID: 0,
+        ID: 0,
         password: 'password',
       );
     } else {
       final data = box.get('student');
-      if (data is Student) {
+      if (data is Customer) {
         return data;
       } else {
-        return Student(
+        return Customer(
           fullName: 'fullName',
           email: 'email',
-          studentID: 0,
+          ID: 0,
           password: 'password',
         );
       }
@@ -35,10 +35,10 @@ class Studentprovider extends StateNotifier<Student> {
 
   // Method to reset the state
   void empty() async {
-    state = Student(
+    state = Customer(
       fullName: 'fullName',
       email: 'email',
-      studentID: 0,
+      ID: 0,
       password: 'password',
     );
     final box = await Hive.openBox('student');
@@ -47,11 +47,11 @@ class Studentprovider extends StateNotifier<Student> {
 
   // Method to update full name
   void updateFullName(String newFullName) async {
-    state = Student(
+    state = Customer(
       fullName: newFullName,
       gender: state.gender,
       email: state.email,
-      studentID: state.studentID,
+      ID: state.ID,
       level: state.level,
       password: state.password,
       imageBytes: state.imageBytes,
@@ -62,11 +62,11 @@ class Studentprovider extends StateNotifier<Student> {
 
   // Method to update gender
   void updateGender(String? newGender) async {
-    state = Student(
+    state = Customer(
       fullName: state.fullName,
       gender: newGender,
       email: state.email,
-      studentID: state.studentID,
+      ID: state.ID,
       level: state.level,
       password: state.password,
       imageBytes: state.imageBytes,
@@ -79,11 +79,11 @@ class Studentprovider extends StateNotifier<Student> {
 
   // Method to update level
   void updateLevel(int? newLevel) async {
-    state = Student(
+    state = Customer(
       fullName: state.fullName,
       gender: state.gender,
       email: state.email,
-      studentID: state.studentID,
+      ID: state.ID,
       level: newLevel,
       password: state.password,
       imageBytes: state.imageBytes,
@@ -94,11 +94,11 @@ class Studentprovider extends StateNotifier<Student> {
 
   // Method to update password
   void updatePassword(String newPassword) async {
-    state = Student(
+    state = Customer(
       fullName: state.fullName,
       gender: state.gender,
       email: state.email,
-      studentID: state.studentID,
+      ID: state.ID,
       level: state.level,
       password: newPassword,
       imageBytes: state.imageBytes,
@@ -109,11 +109,11 @@ class Studentprovider extends StateNotifier<Student> {
 
   // Method to update profile image
   void updateImage(Uint8List? newImageBytes) async {
-    state = Student(
+    state = Customer(
       fullName: state.fullName,
       gender: state.gender,
       email: state.email,
-      studentID: state.studentID,
+      ID: state.ID,
       level: state.level,
       password: state.password,
       imageBytes: newImageBytes,
@@ -123,7 +123,7 @@ class Studentprovider extends StateNotifier<Student> {
   }
 
   // Method to update multiple fields using a map
-  void updateStudent(Student student) async {
+  void updateStudent(Customer student) async {
     state = student;
     final box = await Hive.openBox('student');
     await box.put('student', state);
@@ -132,6 +132,6 @@ class Studentprovider extends StateNotifier<Student> {
 }
 
 // Provider declaration
-final studentProvider = StateNotifierProvider<Studentprovider, Student>(
-  (ref) => Studentprovider(),
+final customerProviderr = StateNotifierProvider<customerProvider, Customer>(
+  (ref) => customerProvider(),
 );

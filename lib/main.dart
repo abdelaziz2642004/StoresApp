@@ -11,11 +11,10 @@ const String baseUrl =
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter(); // Initialize Hive
-  Hive.registerAdapter(CustomerAdapter()); // Register here
-  await Hive.openBox('customer'); // Open the authBox before using it
-  Hive.registerAdapter(StoreAdapter()); // Register here
-  await Hive.openBox('store'); // Open the authBox before using it
-
+  await Hive.initFlutter();
+  Hive.registerAdapter(CustomerAdapter());
+  await Hive.openBox('customer');
+  Hive.registerAdapter(StoreAdapter());
+  await Hive.openBox<List>('storesBox');
   runApp(const ProviderScope(child: MaterialApp(home: App())));
 }

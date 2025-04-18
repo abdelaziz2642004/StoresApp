@@ -4,6 +4,7 @@ import 'package:store_app/Models/Customer.dart';
 import 'package:store_app/Models/store.dart';
 import 'package:store_app/Providers/customerProvider.dart';
 import 'package:store_app/Providers/favoriteStoresProvider.dart';
+import 'package:store_app/Screens/ProfileScreen/ProfileService.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/HelpingWidgets/store_colors.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/HelpingWidgets/store_distance_card.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/HelpingWidgets/store_info_chip.dart';
@@ -153,6 +154,23 @@ class _StoreDetailsBodyState extends ConsumerState<StoreDetailsBody> {
                                     //   widget.store,
                                     // );
                                     // setState(() {});
+                                    bool ok =
+                                        await ProfileService.checkBackendConnection();
+                                    if (!ok) {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).clearSnackBars();
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                            "❌ Not connected to backend. Try again later.",
+                                          ),
+                                        ),
+                                      );
+                                      return;
+                                    }
                                     Customer customer = ref.read(
                                       customerProviderr,
                                     );

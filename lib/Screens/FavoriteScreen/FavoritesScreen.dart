@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:store_app/Models/store.dart';
+import 'package:store_app/Providers/AllStoresProvider.dart';
 import 'package:store_app/Providers/customerProvider.dart';
 import 'package:store_app/Providers/favoriteStoresProvider.dart';
 import 'package:store_app/Screens/FavoriteScreen/HelpingWidgets/StoreCard.dart';
@@ -33,6 +33,7 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
   Widget build(BuildContext context) {
     final customer = ref.read(customerProviderr);
     final favoriteAsync = ref.watch(favoriteStoresProvider(customer.ID));
+    final storesAsync = ref.watch(storesProvider);
 
     return Scaffold(
       body: CustomScrollView(
@@ -67,17 +68,53 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
                     ),
                   ),
               loading: () => const Center(child: CircularProgressIndicator()),
-              error:
-                  (error, stack) => Center(
-                    child: Text(
-                      'Error: $error',
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                  ),
+              error: (error, stack) => buildErrorWidget(error, ref),
             ),
           ),
         ],
       ),
     );
   }
+}
+
+Widget buildErrorWidget(Object error, WidgetRef ref) {
+  return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Icons.error_outline, color: darkAccent, size: 48),
+        const SizedBox(height: 16),
+        Text(
+          'Failed to load stores',
+          style: TextStyle(
+            fontSize: 18,
+            color: textColor,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Text(
+            error.toString(),
+            style: TextStyle(color: secondaryText),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        const SizedBox(height: 16),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primaryColor,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          ),
+          onPressed: () => ref.refresh(storesProvider),
+          child: const Text('Retry'),
+        ),
+      ],
+    ),
+  );
 }

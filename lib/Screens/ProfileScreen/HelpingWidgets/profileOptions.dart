@@ -12,12 +12,12 @@ class ProfileOptions extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final EditService editService = EditService(rebuildParent: () {}, ref: ref);
-    Customer student = ref.watch(customerProviderr);
-    editService.gender = student.gender;
-    editService.fullName = student.fullName;
-    editService.level = student.level;
-    editService.ID = student.ID;
-    editService.email = student.email;
+    Customer customer = ref.watch(customerProviderr);
+    editService.gender = customer.gender;
+    editService.fullName = customer.fullName;
+    editService.level = customer.level;
+    editService.ID = customer.ID;
+    editService.email = customer.email;
 
     return Column(
       children: [
@@ -74,7 +74,7 @@ class ProfileOptions extends ConsumerWidget {
               );
               return;
             }
-            _showChangePasswordDialog(context, editService, student);
+            _showChangePasswordDialog(context, editService, customer);
           },
         ),
         ListTile(
@@ -111,7 +111,7 @@ class ProfileOptions extends ConsumerWidget {
   void _showChangePasswordDialog(
     BuildContext context,
     EditService editService,
-    Customer student,
+    Customer customer,
   ) {
     final TextEditingController oldPasswordController = TextEditingController();
     final TextEditingController newPasswordController = TextEditingController();
@@ -136,7 +136,7 @@ class ProfileOptions extends ConsumerWidget {
                   validator: (value) {
                     if (value == null || value.isEmpty)
                       return 'Enter old password';
-                    if (value != student.password)
+                    if (value != customer.password)
                       return 'Password Incorrect, enter the right one';
                     return null;
                   },

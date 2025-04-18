@@ -2,6 +2,7 @@ import 'package:store_app/Models/Customer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:store_app/Models/store.dart';
 import 'package:store_app/app.dart';
 
 const String baseUrl =
@@ -12,7 +13,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter(); // Initialize Hive
   Hive.registerAdapter(CustomerAdapter()); // Register here
-  await Hive.openBox('student'); // Open the authBox before using it
+  await Hive.openBox('customer'); // Open the authBox before using it
+  Hive.registerAdapter(StoreAdapter()); // Register here
+  await Hive.openBox('store'); // Open the authBox before using it
 
   runApp(const ProviderScope(child: MaterialApp(home: App())));
 }

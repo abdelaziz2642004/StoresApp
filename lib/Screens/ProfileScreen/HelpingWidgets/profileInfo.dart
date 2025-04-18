@@ -24,7 +24,7 @@ class _ProfileInfoState extends ConsumerState<ProfileInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final student = ref.watch(customerProviderr);
+    final customer = ref.watch(customerProviderr);
 
     return Center(
       child: Card(
@@ -38,7 +38,7 @@ class _ProfileInfoState extends ConsumerState<ProfileInfo> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                capitalizeWords(student.fullName),
+                capitalizeWords(customer.fullName),
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -47,20 +47,20 @@ class _ProfileInfoState extends ConsumerState<ProfileInfo> {
               const SizedBox(height: 8),
               Divider(color: Colors.grey.shade300, thickness: 1),
               const SizedBox(height: 8),
-              _buildInfoRow(Icons.badge, 'ID', student.ID.toString()),
-              _buildInfoRow(Icons.email, 'Email', student.email),
+              _buildInfoRow(Icons.badge, 'ID', customer.ID.toString()),
+              _buildInfoRow(Icons.email, 'Email', customer.email),
               _buildInfoRow(
                 Icons.school,
                 'Level',
-                student.level != null
-                    ? student.level.toString()
+                customer.level != null
+                    ? customer.level.toString()
                     : 'Undetermined',
               ),
               _buildInfoRow(
                 Icons.person,
                 'Gender',
-                student.gender != null
-                    ? capitalizeWords(student.gender!)
+                customer.gender != null
+                    ? capitalizeWords(customer.gender!)
                     : 'Undetermined',
               ),
             ],

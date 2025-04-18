@@ -6,11 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class customerProvider extends StateNotifier<Customer> {
   // Constructor
-  customerProvider() : super(_getInitialStudent());
+  customerProvider() : super(_getInitialcustomer());
 
-  // Get initial student from Hive or return default
-  static Customer _getInitialStudent() {
-    var box = Hive.box('student');
+  // Get initial customer from Hive or return default
+  static Customer _getInitialcustomer() {
+    var box = Hive.box('customer');
     if (box.isEmpty) {
       return Customer(
         fullName: 'fullName',
@@ -19,7 +19,7 @@ class customerProvider extends StateNotifier<Customer> {
         password: 'password',
       );
     } else {
-      final data = box.get('student');
+      final data = box.get('customer');
       if (data is Customer) {
         return data;
       } else {
@@ -41,7 +41,7 @@ class customerProvider extends StateNotifier<Customer> {
       ID: 0,
       password: 'password',
     );
-    final box = await Hive.openBox('student');
+    final box = await Hive.openBox('customer');
     box.clear();
   }
 
@@ -56,8 +56,8 @@ class customerProvider extends StateNotifier<Customer> {
       password: state.password,
       imageBytes: state.imageBytes,
     );
-    final box = await Hive.openBox('student');
-    await box.put('student', state);
+    final box = await Hive.openBox('customer');
+    await box.put('customer', state);
   }
 
   // Method to update gender
@@ -71,8 +71,8 @@ class customerProvider extends StateNotifier<Customer> {
       password: state.password,
       imageBytes: state.imageBytes,
     );
-    final box = await Hive.openBox('student');
-    await box.put('student', state);
+    final box = await Hive.openBox('customer');
+    await box.put('customer', state);
   }
 
   // Met
@@ -88,8 +88,8 @@ class customerProvider extends StateNotifier<Customer> {
       password: state.password,
       imageBytes: state.imageBytes,
     );
-    final box = await Hive.openBox('student');
-    await box.put('student', state);
+    final box = await Hive.openBox('customer');
+    await box.put('customer', state);
   }
 
   // Method to update password
@@ -103,8 +103,8 @@ class customerProvider extends StateNotifier<Customer> {
       password: newPassword,
       imageBytes: state.imageBytes,
     );
-    final box = await Hive.openBox('student');
-    await box.put('student', state);
+    final box = await Hive.openBox('customer');
+    await box.put('customer', state);
   }
 
   // Method to update profile image
@@ -118,16 +118,16 @@ class customerProvider extends StateNotifier<Customer> {
       password: state.password,
       imageBytes: newImageBytes,
     );
-    final box = await Hive.openBox('student');
-    await box.put('student', state);
+    final box = await Hive.openBox('customer');
+    await box.put('customer', state);
   }
 
   // Method to update multiple fields using a map
-  void updateStudent(Customer student) async {
-    state = student;
-    final box = await Hive.openBox('student');
-    await box.put('student', state);
-    print(box.get('student'));
+  void updatecustomer(Customer customer) async {
+    state = customer;
+    final box = await Hive.openBox('customer');
+    await box.put('customer', state);
+    print(box.get('customer'));
   }
 }
 

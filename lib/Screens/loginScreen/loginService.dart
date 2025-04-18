@@ -30,7 +30,7 @@ class Loginservice extends Service {
             : json['imageData']['imageData'] as String,
       );
 
-      Customer student = Customer(
+      Customer customer = Customer(
         fullName: json['name'] as String,
         email: json['email'] as String,
         ID: json['id'] as int,
@@ -39,13 +39,13 @@ class Loginservice extends Service {
         imageBytes: imageBytes,
       );
 
-      ref.read(customerProviderr.notifier).updateStudent(student);
+      ref.read(customerProviderr.notifier).updatecustomer(customer);
 
       // // Clear Hive storage and store new credentials
       // var box = Hive.box('credentials');
       // await box.clear();
-      // await box.put('studentID', student.studentID);
-      // await box.put('password', student.password);
+      // await box.put('customerID', customer.customerID);
+      // await box.put('password', customer.password);
 
       return true;
     } else {

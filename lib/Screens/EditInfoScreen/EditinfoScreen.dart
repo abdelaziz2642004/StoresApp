@@ -24,11 +24,11 @@ class _SignupScreenState extends ConsumerState<Editinfoscreen> {
       },
       ref: ref,
     );
-    Customer student = ref.read(customerProviderr);
+    Customer customer = ref.read(customerProviderr);
 
-    editservice.fullName = student.fullName;
-    editservice.ID = student.ID;
-    editservice.email = student.email;
+    editservice.fullName = customer.fullName;
+    editservice.ID = customer.ID;
+    editservice.email = customer.email;
   }
 
   late EditService editservice;

@@ -59,7 +59,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           return;
                         }
 
-                        var box = Hive.box('student');
+                        var box = Hive.box('customer');
                         await box.clear();
 
                         Navigator.pushReplacement(

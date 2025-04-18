@@ -8,6 +8,8 @@ import 'package:store_app/Screens/loginScreen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
+import 'package:store_app/Screens/StoresScreen/HelpingWidgets/colors.dart';
+import 'package:store_app/Screens/StoresScreen/HelpingWidgets/Store_app_bar.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -20,25 +22,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     Customer cust = ref.watch(customerProviderr);
-    return PopScope(
-      canPop: true,
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            title: const Text(
-              'Profile',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            centerTitle: true,
-            backgroundColor: Colors.white,
-            elevation: 0,
-          ),
-          body: SingleChildScrollView(
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: [
+          StoreAppBar(text: 'Profile'),
+          SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               child: Column(
@@ -62,7 +52,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
-                                "❌ Not connected to backend. try again later",
+                                "❌ Not connected to backend. Try again later.",
                               ),
                             ),
                           );
@@ -100,7 +90,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:store_app/Models/Customer.dart';
 import 'package:store_app/Models/store.dart';
-import 'package:store_app/Providers/favoriteMealsProvider.dart';
-import 'package:store_app/Screens/FavoriteScreen/favoriteService.dart';
+import 'package:store_app/Providers/customerProvider.dart';
+import 'package:store_app/Providers/favoriteStoresProvider.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/HelpingWidgets/store_colors.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/HelpingWidgets/store_distance_card.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/HelpingWidgets/store_info_chip.dart';
@@ -29,8 +30,8 @@ class StoreDetailsBody extends ConsumerStatefulWidget {
 class _StoreDetailsBodyState extends ConsumerState<StoreDetailsBody> {
   @override
   Widget build(BuildContext context) {
-    final favoritedStoresAsync = ref.watch(favoriteStoresProvider);
-    final FavoriteService favoriteService = FavoriteService(ref: ref);
+    final customer = ref.read(customerProviderr);
+    final favoritedStoresAsync = ref.watch(favoriteStoresProvider(customer.ID));
     final Future<double> distance = widget.distanceService.getDistanceToStore(
       widget.store,
     );
@@ -148,16 +149,27 @@ class _StoreDetailsBodyState extends ConsumerState<StoreDetailsBody> {
                               data: (favoritedStores) {
                                 return IconButton(
                                   onPressed: () async {
-                                    await favoriteService.toggleFavorite(
-                                      widget.store,
+                                    // await favoriteService.toggleFavorite(
+                                    //   widget.store,
+                                    // );
+                                    // setState(() {});
+                                    Customer customer = ref.read(
+                                      customerProviderr,
                                     );
-                                    setState(() {});
+                                    ref
+                                        .read(
+                                          favoriteStoresProvider(
+                                            customer.ID,
+                                          ).notifier,
+                                        )
+                                        .toggleFavorite(ref, widget.store);
                                   },
                                   icon: Icon(
                                     favoritedStores.contains(widget.store)
                                         ? Icons.star
                                         : Icons.star_border,
                                     size: 32,
+                                    color: const Color(0xffffb347),
                                   ),
                                 );
                               },

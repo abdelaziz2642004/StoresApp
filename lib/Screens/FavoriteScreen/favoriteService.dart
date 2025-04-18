@@ -5,14 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:store_app/FieldsData/Service.dart';
 import 'package:store_app/Models/store.dart';
 import 'package:http/http.dart' as http;
-import 'package:store_app/Providers/favoriteMealsProvider.dart';
+import 'package:store_app/Providers/customerProvider.dart';
 import 'package:store_app/main.dart';
 
 class FavoriteService extends Service {
-  final WidgetRef ref;
-  FavoriteService({required this.ref});
+  // final WidgetRef ref;
 
   static Future<List<Store>> fetchFavoritedStores(int custID) async {
+    // int custID = ref.read(customerProviderr).ID;
+
     final response = await http.get(Uri.parse('$baseUrl/$custID/getFavorites'));
 
     if (response.statusCode == 200) {
@@ -39,15 +40,15 @@ class FavoriteService extends Service {
     }
   }
 
-  Future<void> toggleFavorite(Store store) async {
+  static Future<void> toggleFavorite(WidgetRef ref, int storeID) async {
+    int custID = ref.read(customerProviderr).ID;
+
     final response = await http.post(
-      Uri.parse('$baseUrl/$ID/toggleFavorite'),
+      Uri.parse('$baseUrl/$custID/toggleFavorite'),
       headers: {"Content-Type": "application/json"},
-      body: jsonEncode({'store_id': store.id}),
+      body: jsonEncode(storeID),
     );
 
-    if (response.statusCode != 200) {
-      ref.invalidate(favoriteStoresProvider);
-    }
+    if (response.statusCode != 200) {}
   }
 }

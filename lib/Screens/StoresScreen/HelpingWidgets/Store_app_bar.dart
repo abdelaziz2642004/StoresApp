@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/Models/Customer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:store_app/Providers/customerProvider.dart';
 import 'package:store_app/Screens/ProfileScreen/profileScreen.dart';
+import 'package:store_app/Screens/StoresScreen/HelpingWidgets/colors.dart';
 
-class StoreAppBar extends StatelessWidget {
-  final Color primaryColor;
-  final Customer customer;
+class StoreAppBar extends ConsumerWidget {
+  final String text;
 
-  const StoreAppBar({
-    super.key,
-    required this.primaryColor,
-    required this.customer,
-  });
+  const StoreAppBar({required this.text, super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final customer = ref.watch(customerProviderr);
     return SliverAppBar(
       title: Text(
-        'Nearby Stores',
+        text,
         style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -40,14 +38,18 @@ class StoreAppBar extends StatelessWidget {
           padding: const EdgeInsets.only(right: 16.0),
           child: GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+              );
             },
             child: CircleAvatar(
               backgroundColor: Colors.white.withOpacity(0.3),
               radius: 22,
-              backgroundImage: (customer.imageBytes == null || customer.imageBytes!.isEmpty)
-                  ? const AssetImage("assets/images/image.png")
-                  : MemoryImage(customer.imageBytes!) as ImageProvider,
+              backgroundImage:
+                  (customer.imageBytes == null || customer.imageBytes!.isEmpty)
+                      ? const AssetImage("assets/images/image.png")
+                      : MemoryImage(customer.imageBytes!) as ImageProvider,
             ),
           ),
         ),

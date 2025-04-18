@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:store_app/Models/store.dart';
+
 import 'package:store_app/Screens/StoreDetailsScreen/HelpingWidgets/store_details_body.dart';
 import 'package:store_app/Screens/StoreDetailsScreen/distanceService.dart';
 
@@ -25,7 +26,9 @@ class _StoreDetailsScreenState extends ConsumerState<StoreDetailsScreen> {
 
   Future<void> _getAddressFromCoordinates() async {
     setState(() => _loadingAddress = true);
-    final address = await distanceService.getAddressFromCoordinates(widget.store);
+    final address = await distanceService.getAddressFromCoordinates(
+      widget.store,
+    );
     setState(() {
       _address = address ?? 'Address not available';
       _loadingAddress = false;
@@ -34,6 +37,7 @@ class _StoreDetailsScreenState extends ConsumerState<StoreDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // This line is used to trigger a rebuild when the provider changes.
     return StoreDetailsBody(
       store: widget.store,
       address: _address,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:store_app/Models/Customer.dart';
 import 'package:store_app/Providers/AllStoresProvider.dart';
 import 'package:store_app/Providers/customerProvider.dart';
 import 'package:store_app/Providers/favoriteStoresProvider.dart';
@@ -33,7 +34,6 @@ class _FavoriteScreenState extends ConsumerState<FavoriteScreen> {
   Widget build(BuildContext context) {
     final customer = ref.read(customerProviderr);
     final favoriteAsync = ref.watch(favoriteStoresProvider(customer.ID));
-    final storesAsync = ref.watch(storesProvider);
 
     return Scaffold(
       body: CustomScrollView(
@@ -111,7 +111,18 @@ Widget buildErrorWidget(Object error, WidgetRef ref) {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           ),
-          onPressed: () => ref.refresh(storesProvider),
+          onPressed: () {
+            final Customer customer = ref.read(customerProviderr);
+            ref
+                .read(favoriteStoresProvider(customer.ID).notifier)
+                .fetchFavorites();
+
+            ref.refresh(storesProvider);
+
+            // Future.delayed(Duration(milliseconds: 100), () {
+            //   runApp(const ProviderScope(child: MaterialApp(home: App())));
+            // });
+          },
           child: const Text('Retry'),
         ),
       ],

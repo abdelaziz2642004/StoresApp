@@ -1,3 +1,4 @@
+import 'package:store_app/Screens/HomeScreen/HomeScreen.dart';
 import 'package:store_app/Screens/ProfileScreen/profileScreen.dart';
 import 'package:store_app/Screens/StoresScreen/StoresScreen.dart';
 import 'package:store_app/Screens/loginScreen/loginService.dart';
@@ -21,9 +22,7 @@ class LoginButtonSection extends StatelessWidget {
               if (successful) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) =>  StoreScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) => Homescreen()),
                 );
               }
             },
